@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    <title>{% block title %}Office Expenses{% endblock %}</title>
+    <!-- Bootstrap core CSS -->
+    <link href="{{ asset('bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="{{ asset('css/hacks/ie10-viewport-bug-workaround.css') }}" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="{{ asset('js/hacks/html5shiv.min.js') }}"></script>
+    <script src="{{ asset('js/hacks/respond.min.js') }}"></script>
+    <![endif]-->
+    {% block stylesheets %}{% endblock %}
+</head>
+
+<body>
+
+<div class="container">
+    <div class="header clearfix">
+        <nav>
+            <ul class="nav nav-pills pull-right">
+                <li role="presentation" class="active"><a href="#">Main</a></li>
+                <li role="presentation"><a href="{{ path('accounts_list') }}">Users</a></li>
+                <li role="presentation"><a href="#">Suppliers</a></li>
+            </ul>
+        </nav>
+        <h3 class="text-muted">Office Expenses</h3>
+    </div>
+    {% for type, messages in app.session.flashbag.all %}
+        {% for message in messages %}
+        <div class="alert alert-{{ type }}">{{ message }}</div>
+        {% endfor %}
+    {% endfor %}
+    <section class="highlight">
+        {% block body %}{% endblock %}
+    </section>
+    {% block controls %}{% endblock %}
+
+    <footer class="footer">
+        <p>&copy; 2016 Company, Inc.</p>
+    </footer>
+
+</div> <!-- /container -->
+{% block html_bottom %}{% endblock %}
+<script src="{{ asset('js/jquery-2.2.2.min.js') }}"></script>
+<script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="{{ asset('js/hacks/ie10-viewport-bug-workaround.js') }}"></script>
+{% block js_bottom %}{% endblock %}
+</body>
+</html>
