@@ -27,9 +27,9 @@
 
 <div class="container">
     <div class="header clearfix">
-        <nav>
+        <nav id="main-nav">
             <ul class="nav nav-pills pull-right">
-                <li role="presentation" class="active"><a href="#">Expenses</a></li>
+                <li role="presentation"><a href="{{ path('expenses_list') }}">Expenses</a></li>
                 <li role="presentation"><a href="{{ path('accounts_list') }}">Managers</a></li>
                 <li role="presentation"><a href="{{ path('suppliers_list') }}">Suppliers</a></li>
             </ul>
@@ -56,6 +56,13 @@
 <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="{{ asset('js/hacks/ie10-viewport-bug-workaround.js') }}"></script>
+<script>
+    // top navigation
+    var currentLocation = window.location.pathname,
+        $mainNav = $('#main-nav');
+    $('li.active', $mainNav).removeClass('active');
+    $('a[href^="' + currentLocation + '"]', $mainNav).closest('li').addClass('active');
+</script>
 {% block js_bottom %}{% endblock %}
 </body>
 </html>
