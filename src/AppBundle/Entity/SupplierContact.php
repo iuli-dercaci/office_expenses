@@ -22,13 +22,6 @@ class SupplierContact
     private $id;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="supplier_id", type="integer")
-     */
-    private $supplierId;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="type", type="string", length=255)
@@ -49,6 +42,11 @@ class SupplierContact
      */
     private $contactPerson;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Supplier", inversedBy="contacts")
+     * @ORM\JoinColumn(name="supplier_id", referencedColumnName="id")
+     */
+    private $supplier;
 
     /**
      * Get id
@@ -58,30 +56,6 @@ class SupplierContact
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set supplier
-     *
-     * @param integer $supplierId
-     *
-     * @return SupplierContact
-     */
-    public function setSupplierId($supplierId)
-    {
-        $this->supplierId = $supplierId;
-
-        return $this;
-    }
-
-    /**
-     * Get supplier
-     *
-     * @return int
-     */
-    public function getSupplierId()
-    {
-        return $this->supplierId;
     }
 
     /**
@@ -155,5 +129,25 @@ class SupplierContact
     {
         return $this->contactPerson;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getSupplier()
+    {
+        return $this->supplier;
+    }
+
+    /**
+     * @param mixed $supplier
+     * @return SupplierContact
+     */
+    public function setSupplier($supplier)
+    {
+        $this->supplier = $supplier;
+        return $this;
+    }
+
+
 }
 

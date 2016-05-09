@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -28,6 +29,18 @@ class Currency
      */
     private $code;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Expense", mappedBy="currency")
+     */
+    private $expenses;
+
+    /**
+     * Account constructor.
+     */
+    public function __construct()
+    {
+        $this->expenses = new ArrayCollection();
+    }
 
     /**
      * Get id

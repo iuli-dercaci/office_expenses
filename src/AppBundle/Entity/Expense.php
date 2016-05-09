@@ -22,20 +22,6 @@ class Expense
     private $id;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="supplier_id", type="integer")
-     */
-    private $supplierId;
-    
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="account_id", type="integer")
-     */
-    private $accountId;
-    
-    /**
      * @var string
      *
      * @ORM\Column(name="description", type="string", length=255)
@@ -48,13 +34,6 @@ class Expense
      * @ORM\Column(name="quantity", type="integer")
      */
     private $quantity;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="currency_id", type="integer")
-     */
-    private $currencyId;
 
     /**
      * @var string
@@ -84,6 +63,28 @@ class Expense
      */
     private $datetime;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Account", inversedBy="expenses")
+     * @ORM\JoinColumn(name="account_id", referencedColumnName="id")
+     */
+    private $account;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Supplier", inversedBy="expenses")
+     * @ORM\JoinColumn(name="supplier_id", referencedColumnName="id")
+     */
+    private $supplier;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Currency", inversedBy="expenses")
+     * @ORM\JoinColumn(name="currency_id", referencedColumnName="id")
+     */
+    private $currency;
+
+    public function __construct()
+    {
+        $this->datetime = new \DateTime();
+    }
 
     /**
      * Get id
@@ -95,48 +96,6 @@ class Expense
         return $this->id;
     }
 
-    /**
-     * Set supplier
-     *
-     * @param integer $supplierId
-     *
-     * @return Expense
-     */
-    public function setSupplierId($supplierId)
-    {
-        $this->supplierId = $supplierId;
-
-        return $this;
-    }
-
-    /**
-     * Get supplier
-     *
-     * @return int
-     */
-    public function getSupplierId()
-    {
-        return $this->supplierId;
-    }
-
-    /**
-     * @param int $accountId
-     * @return Expense
-     */
-    public function setAccountId($accountId)
-    {
-        $this->accountId = $accountId;
-
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getAccountId()
-    {
-        return $this->accountId;
-    }
 
     /**
      * Set description
@@ -184,30 +143,6 @@ class Expense
     public function getQuantity()
     {
         return $this->quantity;
-    }
-
-    /**
-     * Set currency
-     *
-     * @param integer $currencyId
-     *
-     * @return Expense
-     */
-    public function setCurrencyId($currencyId)
-    {
-        $this->currencyId = $currencyId;
-
-        return $this;
-    }
-
-    /**
-     * Get currency
-     *
-     * @return int
-     */
-    public function getCurrencyId()
-    {
-        return $this->currencyId;
     }
 
     /**
@@ -305,5 +240,61 @@ class Expense
     {
         return $this->datetime;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getAccount()
+    {
+        return $this->account;
+    }
+
+    /**
+     * @param mixed $account
+     * @return Expense
+     */
+    public function setAccount($account)
+    {
+        $this->account = $account;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSupplier()
+    {
+        return $this->supplier;
+    }
+
+    /**
+     * @param mixed $supplier
+     * @return Expense
+     */
+    public function setSupplier($supplier)
+    {
+        $this->supplier = $supplier;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCurrency()
+    {
+        return $this->currency;
+    }
+
+    /**
+     * @param mixed $currency
+     * @return Expense
+     */
+    public function setCurrency($currency)
+    {
+        $this->currency = $currency;
+        return $this;
+    }
+
+
 }
 

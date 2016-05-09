@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -42,10 +43,24 @@ class Supplier
      */
     private $datetime;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Expense", mappedBy="supplier")
+     */
+    private $expenses;
 
+    /**
+     * @ORM\OneToMany(targetEntity="SupplierContact", mappedBy="supplier")
+     */
+    private $contacts;
+
+    /**
+     * Supplier constructor.
+     */
     public function __construct()
     {
         $this->datetime = new \DateTime();
+        $this->expenses = new ArrayCollection();
+        $this->contacts = new ArrayCollection();
     }
 
     /**

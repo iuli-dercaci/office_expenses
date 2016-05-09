@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\Date;
 
@@ -57,10 +58,19 @@ class Account
      */
     private $datetime;
 
-    
+    /**
+     * @ORM\OneToMany(targetEntity="Expense", mappedBy="account")
+     */
+    private $expenses;
+
+
+    /**
+     * Account constructor.
+     */
     public function __construct()
     {
         $this->datetime = new \DateTime();
+        $this->expenses = new ArrayCollection();
     }
 
     /**
@@ -191,6 +201,14 @@ class Account
     public function getDatetime()
     {
         return $this->datetime;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return sprintf('%s %s', $this->firstName, $this->lastName);
     }
 }
 
