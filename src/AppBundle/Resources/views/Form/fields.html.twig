@@ -1,0 +1,17 @@
+{% block form_row %}
+    {% spaceless %}
+        {% set block_class = 'form-group' %}
+        {% set input_attributes = {'class': 'form-control'} %}
+        {% if form_errors(form) %}
+            {% set block_class = 'form-group has-error' %}
+            {% set input_attributes = {'class': 'form-control', 'aria-describedby': 'helpBlock_' ~ form.vars.id} %}
+        {% endif %}
+        <div class="{{ block_class }}">
+            {{ form_label(form, label|default(null), {'label_attr': {'class': 'control-label'}}) }}
+            {{ form_widget(form, {'attr': input_attributes}) }}
+            {% if form_errors(form) %}
+            <div class="help-block" id="{{ 'helpBlock_' ~ form.vars.id }}">{{ form_errors(form) }}</div>
+            {% endif %}
+        </div>
+    {% endspaceless %}
+{% endblock form_row %}
