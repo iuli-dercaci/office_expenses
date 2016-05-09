@@ -1,0 +1,70 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}AppBundle:User:list{% endblock %}
+
+{% block body %}
+<h2 class="text-center">List of managers</h2>
+<div class="row">
+    <ul class="list-unstyled col-sm-10 col-sm-offset-1">
+        {% for m in accounts %}
+            <li>{{ m.getFirstName }}&nbsp;{{ m.getLastName }}
+                <a href="{{ path('account_update', {'id': m.id})  }}">
+                    <span class="glyphicon glyphicon-option-vertical pull-right list-edit-item" aria-hidden="true"></span>
+                </a>
+                <a href="#"
+                   data-href="{{ path('account_delete', {'id': m.id}) }}"
+                   data-toggle="modal"
+                   data-target="#confirm-delete">
+                    <span class="glyphicon glyphicon-remove pull-right list-delete-item" aria-hidden="true"></span>
+                </a>
+            </li>
+        {% else %}
+            <li class="text-danger text-center">no managers were found</li>
+        {% endfor %}
+    </ul>
+        <div class="text-center">
+            <a href="{{ path('account_create') }}" class="btn btn-lg btn-info" role="button">Add</a>
+        </div>
+</div>
+{% endblock %}
+    {% block controls %}
+    {% endblock %}
+    {% block html_bottom %}
+    <!-- modal "delete" -->
+    <div class="modal fade" id="confirm-delete" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Account delete confirmation</h4>
+                </div>
+                <div class="modal-body">
+                    <p>You are about to delete account, this is cannot be undone. Are you sure?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-danger btn-ok btn-delete">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /modal -->
+    {% endblock %}
+    {% block js_bottom %}
+    <script src="{{ asset('js/jquery.cookie.js') }}"></script>
+    <script>
+        var $modal = $('#confirm-delete');
+        $('.list-delete-item').on('click', function () {
+            $('.btn-delete', $modal).data('href', $(this).closest('a').data('href'));
+        });
+        $('.btn-delete', $modal).on('click', function () {
+            var href = $(this).data('href'),
+                csrftoken = $.cookie('csrftoken')
+                ;
+            if (href) {
+                $.post(href, {'csrfmiddlewaretoken': csrftoken}, function () {
+                    window.location.reload();
+                });
+            }
+        });
+    </script>
+    {% endblock %}
