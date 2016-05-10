@@ -105,3 +105,13 @@ ul.messages {
     list-style: none;
     padding-left: 0;
 }
+.expenses-list .expense-detail .supplier {
+    width: 30%;
+    font-style: italic;
+}
+.expenses-list .expense-detail .account {
+    font-style: italic;
+}
+.expenses-list .expense-detail .total {
+    font-weight: bold;
+}

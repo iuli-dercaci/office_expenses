@@ -1,0 +1,73 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}{{ parent() }} :: Expenses{% endblock %}
+
+{% block body %}
+    <h2 class="text-center">List of expenses</h2>
+    <div class="row">
+        <ul class="list-unstyled col-sm-10 col-sm-offset-1 expenses-list">
+            {% for expense in expenses %}
+                <li>
+                    <ul class="list-inline expense-detail">
+                        <li class="supplier">{{ expense.supplier.name }}</li>
+                        <li class="money-data">
+                            <span class="quantity text-muted">{{ expense.quantity }}&nbsp;x&nbsp;{{ expense.price }}</span>&nbsp;=&nbsp;
+                            <span class="total">{{ expense.total }}&nbsp;{{ expense.currency.code|lower }}</span>
+                        </li>
+                        <li class="account text-muted pull-right">by {{ expense.account.getName }}</li>
+                        <li class="date text-muted  pull-right">{{ expense.datetime|date("m/d/Y") }}</li>
+                    </ul>
+                </li>
+                <li class="expense-description text-info">
+                    {{ expense.description|default('...') }}
+                </li>
+            {% else %}
+                <li class="text-danger text-center">no expenses were found</li>
+            {% endfor %}
+        </ul>
+        <div class="text-center">
+            <a href="{{ path('expense_create') }}" class="btn btn-lg btn-info" role="button">Add</a>
+        </div>
+    </div>
+{% endblock %}
+    {% block controls %}
+    {% endblock %}
+    {% block html_bottom %}
+        <!-- modal "delete" -->
+        <div class="modal fade" id="confirm-delete" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Account delete confirmation</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>You are about to delete account, this is cannot be undone. Are you sure?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <a class="btn btn-danger btn-ok btn-delete">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /modal -->
+    {% endblock %}
+    {% block js_bottom %}
+        <script src="{{ asset('js/jquery.cookie.js') }}"></script>
+        <script>
+            var $modal = $('#confirm-delete');
+            $('.list-delete-item').on('click', function () {
+                $('.btn-delete', $modal).data('href', $(this).closest('a').data('href'));
+            });
+            $('.btn-delete', $modal).on('click', function () {
+                var href = $(this).data('href'),
+                        csrftoken = $.cookie('csrftoken')
+                        ;
+                if (href) {
+                    $.post(href, {'csrfmiddlewaretoken': csrftoken}, function () {
+                        window.location.reload();
+                    });
+                }
+            });
+        </script>
+    {% endblock %}
