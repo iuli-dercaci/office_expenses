@@ -64,6 +64,24 @@ class Supplier
     }
 
     /**
+     * @return mixed
+     */
+    public function getContacts()
+    {
+        return $this->contacts;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getExpenses()
+    {
+        return $this->expenses;
+    }
+
+    
+
+    /**
      * Get id
      *
      * @return int

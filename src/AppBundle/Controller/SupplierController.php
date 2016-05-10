@@ -44,14 +44,14 @@ class SupplierController extends Controller
     }
 
     /**
-     * @Route("/update", name="supplier_update")
+     * @Route("/update/{supplier_id}", requirements={"supplier_id": "\d+"}, name="supplier_update")
+     * @param $supplier_id
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function updateAction(Request $request)
+    public function updateAction($supplier_id, Request $request)
     {
-        $id = $request->query->getInt('id');
-        $account = $this->getDoctrine()->getRepository('AppBundle:Supplier')->find($id);
+        $account = $this->getDoctrine()->getRepository('AppBundle:Supplier')->find($supplier_id);
         if (!$account) {
             $this->addFlash('warning', 'Supplier was not found');
             return $this->redirectToRoute('suppliers_list', array(), 301);
@@ -64,18 +64,21 @@ class SupplierController extends Controller
             $this->addFlash('success', 'Supplier was updated');
             return $this->redirectToRoute('suppliers_list', array(), 301);
         }
-        return $this->render('AppBundle:Supplier:create.html.twig', ['form' => $form->createView(), 'submit_label' => 'Update']);
+        return $this->render('AppBundle:Supplier:create.html.twig', [
+            'form' => $form->createView(),
+            'submit_label' => 'Update',
+            'supplier_id' => $supplier_id
+        ]);
     }
 
     /**
-     * @Route("/delete", name="supplier_delete")
-     * @param Request $request
+     * @Route("/delete/{supplier_id}", requirements={"supplier_id": "\d+"}, name="supplier_delete")
+     * @param $supplier_id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function deleteAction(Request $request)
+    public function deleteAction($supplier_id)
     {
-        $id = $request->query->getInt('id');
-        $supplier = $this->getDoctrine()->getRepository('AppBundle:Supplier')->find($id);
+        $supplier = $this->getDoctrine()->getRepository('AppBundle:Supplier')->find($supplier_id);
         if (!$supplier) {
             $this->addFlash('warning', 'Supplier was not found');
         } else {
