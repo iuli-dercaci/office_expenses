@@ -1,0 +1,64 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}{{ parent() }} :: Supplier contacts{% endblock %}
+
+{% block body %}
+    <h2 class="text-center">List of contacts</h2>
+    <div class="row">
+        <ul class="list-unstyled col-sm-10 col-sm-offset-1 expenses-list">
+            {% for contact in contacts %}
+                <li>
+                    <ul class="list-inline expense-detail">
+                        <li class="supplier">{{ contact.supplier.name }}</li>
+                    </ul>
+                </li>
+            {% else %}
+                <li class="text-danger text-center">no contacts were found</li>
+            {% endfor %}
+        </ul>
+        <div class="text-center">
+            <a href="{{ path('supplier_contact_create', {'supplier_id': supplier_id}) }}" class="btn btn-lg btn-info" role="button">Add</a>
+        </div>
+    </div>
+{% endblock %}
+    {% block controls %}
+    {% endblock %}
+    {% block html_bottom %}
+        <!-- modal "delete" -->
+        <div class="modal fade" id="confirm-delete" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Account delete confirmation</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>You are about to delete account, this is cannot be undone. Are you sure?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <a class="btn btn-danger btn-ok btn-delete">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /modal -->
+    {% endblock %}
+    {% block js_bottom %}
+        <script src="{{ asset('js/jquery.cookie.js') }}"></script>
+        <script>
+            var $modal = $('#confirm-delete');
+            $('.list-delete-item').on('click', function () {
+                $('.btn-delete', $modal).data('href', $(this).closest('a').data('href'));
+            });
+            $('.btn-delete', $modal).on('click', function () {
+                var href = $(this).data('href'),
+                        csrftoken = $.cookie('csrftoken')
+                        ;
+                if (href) {
+                    $.post(href, {'csrfmiddlewaretoken': csrftoken}, function () {
+                        window.location.reload();
+                    });
+                }
+            });
+        </script>
+    {% endblock %}
