@@ -11,8 +11,8 @@
     <div class="form-group text-center">
         <input type="submit" value="{{ submit_label|default('Add') }}" class="btn btn-lg btn-info" />
     </div>
+    <div class="form-group text-center">
+        <a class="btn btn-xs btn-info" href="{{ path('supplier_contact_create', {'supplier_id': supplier_id}) }}" role="button">Add contact</a>
+    </div>
     {{ form_end(form) }}
-{% endblock %}
-{% block controls %}
-
 {% endblock %}

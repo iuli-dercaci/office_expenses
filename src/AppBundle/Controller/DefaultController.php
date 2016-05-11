@@ -2,6 +2,8 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Expense;
+use AppBundle\Form\ExpenseType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,7 +36,7 @@ class DefaultController extends Controller
 
             return $this->redirect($this->generateUrl('expenses_list'));
         }
-        return $this->render('AppBundle:Expense:create.html.twig', ['form' => $form->createView()]);
+        return $this->render('AppBundle:Expense:create.html.twig', array('form' => $form->createView()));
     }
 
 }
