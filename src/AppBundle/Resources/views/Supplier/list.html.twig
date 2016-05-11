@@ -8,15 +8,24 @@
         <ul class="list-unstyled col-sm-10 col-sm-offset-1">
             {% for s in suppliers %}
                 <li>{{ s.getName }} - iban: {{ s.getIban }}
-                    <a href="{{ path('supplier_update', {'id': s.id})  }}">
+                    <a href="{{ path('supplier_update', {'supplier_id': s.id})  }}">
                         <span class="glyphicon glyphicon-option-vertical pull-right list-edit-item" aria-hidden="true"></span>
                     </a>
                     <a href="#"
-                       data-href="{{ path('supplier_delete', {'id': s.id}) }}"
+                       data-href="{{ path('supplier_delete', {'supplier_id': s.id}) }}"
                        data-toggle="modal"
                        data-target="#confirm-delete">
                         <span class="glyphicon glyphicon-remove pull-right list-delete-item" aria-hidden="true"></span>
                     </a>
+                </li>
+                <li>
+                    {% if s.getContacts %}
+                    <ul class="text-muted">
+                        {% for contact in s.contacts %}
+                        <li>{{ contact.type }}: {{ contact.value }} {% if contact.contactPerson %}/{{ contact.contactPerson }}/{% endif %}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
                 </li>
             {% else %}
                 <li class="text-danger text-center">no suppliers were found</li>

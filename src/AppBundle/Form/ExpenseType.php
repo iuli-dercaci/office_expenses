@@ -20,25 +20,25 @@ class ExpenseType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('account', EntityType::class, [
+            ->add('account', EntityType::class, array(
                 'class' => 'AppBundle:Account',
                 'choice_label' => 'name',
                 'required' => false,
-            ])
-            ->add('supplier', EntityType::class, [
+            ))
+            ->add('supplier', EntityType::class, array(
                 'class' => 'AppBundle:Supplier',
                 'choice_label' => 'name',
                 'required' => false,
-            ])
+            ))
             ->add('description')
-            ->add('currency', EntityType::class, [
+            ->add('currency', EntityType::class, array(
                 'class' => 'AppBundle:Currency',
                 'choice_label' => 'code',
                 'required' => false,
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('c')->orderBy('c.id', 'ASC');
                 }
-            ])
+            ))
             ->add('price')
             ->add('exchangeRate')
             ->add('quantity')

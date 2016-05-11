@@ -46,7 +46,7 @@ class SupplierContactController extends Controller
                 $em->persist($contact);
                 $em->flush();
                 $this->addFlash('success', 'Contact was added');
-                return $this->redirect($this->generateUrl('supplier_update', ['supplier_id' => $supplier_id]));
+                return $this->redirect($this->generateUrl('supplier_update', array('supplier_id' => $supplier_id)));
             }
             return $this->render('AppBundle:SupplierContact:create.html.twig', [
                 'form' => $form->createView(),

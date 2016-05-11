@@ -41,7 +41,7 @@ class AccountController extends Controller
 
             return $this->redirect($this->generateUrl('accounts_list'));
         }
-        return $this->render('AppBundle:Account:create.html.twig', ['form' => $form->createView()]);
+        return $this->render('AppBundle:Account:create.html.twig', array('form' => $form->createView()));
     }
 
     /**
@@ -65,7 +65,7 @@ class AccountController extends Controller
             $this->addFlash('success', 'Account was updated');
             return $this->redirectToRoute('accounts_list', array(), 301);
         }
-        return $this->render('AppBundle:Account:create.html.twig', ['form' => $form->createView(), 'submit_label' => 'Update']);
+        return $this->render('AppBundle:Account:create.html.twig', array('form' => $form->createView(), 'submit_label' => 'Update'));
     }
 
     /**

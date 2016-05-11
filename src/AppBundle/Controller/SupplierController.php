@@ -40,7 +40,7 @@ class SupplierController extends Controller
 
             return $this->redirect($this->generateUrl('suppliers_list'));
         }
-        return $this->render('AppBundle:Account:create.html.twig', ['form' => $form->createView()]);
+        return $this->render('AppBundle:Account:create.html.twig', array('form' => $form->createView()));
     }
 
     /**
@@ -64,11 +64,11 @@ class SupplierController extends Controller
             $this->addFlash('success', 'Supplier was updated');
             return $this->redirectToRoute('suppliers_list', array(), 301);
         }
-        return $this->render('AppBundle:Supplier:create.html.twig', [
+        return $this->render('AppBundle:Supplier:create.html.twig', array(
             'form' => $form->createView(),
             'submit_label' => 'Update',
             'supplier_id' => $supplier_id
-        ]);
+        ));
     }
 
     /**

@@ -61,7 +61,7 @@
     var currentLocation = window.location.pathname,
         $mainNav = $('#main-nav');
     $('li.active', $mainNav).removeClass('active');
-    $('a[href^="' + currentLocation + '"]', $mainNav).closest('li').addClass('active');
+    $('a[href^="' + currentLocation + '"]', $mainNav).first().closest('li').addClass('active');
 </script>
 {% block js_bottom %}{% endblock %}
 </body>
